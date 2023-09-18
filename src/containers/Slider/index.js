@@ -7,9 +7,16 @@ import "./style.scss";
 const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
+
+  const [radioIndex, setRadioIndex] = useState(0);
+  const handleRadioChange = (event) => {
+    setIndex(event.target.value);
+    setRadioIndex(event.target.value);
+  }
+
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
-  ).reverse();
+    new Date(evtA.date) - new Date(evtB.date)
+  );
   const nextCard = () => {
     setTimeout(
       () => setIndex(index < byDateDesc.length -1 ? index + 1 : 0),
@@ -17,8 +24,10 @@ const Slider = () => {
     );
   };
   useEffect(() => {
+    setRadioIndex(index);
     nextCard();
-  });
+  },[index]);
+
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
@@ -45,7 +54,8 @@ const Slider = () => {
                   key={`${event.id}`}
                   type="radio"
                   name="radio-button"
-                  checked={idx === radioIdx}
+                  checked={radioIndex === radioIdx}
+                  onChange={handleRadioChange}
                 />
               ))}
             </div>
