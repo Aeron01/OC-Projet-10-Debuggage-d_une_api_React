@@ -35,7 +35,7 @@ const Slider = () => {
   useEffect(() => {
     setRadioIndex(index);
     nextCard();
-  },[index]);
+  });
 
   return (
     <div className="SlideCardList">
