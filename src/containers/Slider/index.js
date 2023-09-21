@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useData } from "../../contexts/DataContext";
 import { getMonth } from "../../helpers/Date";
 
@@ -20,26 +20,26 @@ const Slider = () => {
  
   const nextCard = () => {
     setTimeout(
-      () => setIndex(index < byDateDesc.length -1 ? index + 1 : 0),
+      () => setIndex(index +1 < byDateDesc.length ? index + 1 : 0),
       5000
     );
   };
+
   useEffect(() => {
+    if(data) nextCard();
     setRadioIndex(index);
-    nextCard();
-  });
+  },[index, data]);
 
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
-        <>
+        <Fragment key={event.title}>
           <div
-            key={event.id}
             className={`SlideCard SlideCard--${
               index === idx ? "display" : "hide"
             }`}
           >
-            <img key={event.cover} src={event.cover} alt="forum" />
+            <img src={event.cover} alt="forum" />
             <div className="SlideCard__descriptionContainer">
               <div className="SlideCard__description">
                 <h3>{event.title}</h3>
@@ -52,7 +52,8 @@ const Slider = () => {
             <div className="SlideCard__pagination">
               {byDateDesc.map((_, radioIdx) => (
                 <input
-                  key={`${event.id}`}
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={`${radioIdx}`}
                   type="radio"
                   name="radio-button"
                   checked={radioIndex === radioIdx}
@@ -61,7 +62,7 @@ const Slider = () => {
               ))}
             </div>
           </div>
-        </>
+        </Fragment>
       ))}
     </div>
   );
