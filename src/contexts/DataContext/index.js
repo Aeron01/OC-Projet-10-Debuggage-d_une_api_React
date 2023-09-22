@@ -37,7 +37,7 @@ export const DataProvider = ({ children }) => {
       // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
           data,
-          last:data ? data.events[data.events.length -1] : null,
+          last:data ? data.events[data.events.length -1] : null, // fix footer thumbnail display
           error,
     }}
     >

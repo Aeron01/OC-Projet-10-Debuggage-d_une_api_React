@@ -1,4 +1,3 @@
-import { useEffect} from "react";
 import Menu from "../../containers/Menu";
 import ServiceCard from "../../components/ServiceCard";
 import EventCard from "../../components/EventCard";
@@ -15,9 +14,6 @@ import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
   const {last} = useData()
-  useEffect(()=> {
-  console.log(last)
-  },[last])
   return <>
     <header>
       <Menu />
@@ -126,7 +122,7 @@ const Page = () => {
           title={last.title}
           date={new Date(last.date)}
           small
-          label={last.type}
+          label={last.type} // fix footer thumbnail display
         />
       </div>
       )}

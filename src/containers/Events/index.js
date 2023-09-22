@@ -9,7 +9,7 @@ import "./style.css";
 
 const PER_PAGE = 9;
 
-  
+// start fix filter event bug (1)
 const filterEvents = (data, type, page) =>
   (data?.events || [])
   .filter((event) => {
@@ -17,8 +17,8 @@ const filterEvents = (data, type, page) =>
         return true;
     }
     return event.type.toLowerCase() === type.toLowerCase(); 
-  }
-  ).filter((event, index) => {
+  })
+  .filter((event, index) => {
     if (
       (page - 1) * PER_PAGE <= index &&
       PER_PAGE * page > index
@@ -27,13 +27,14 @@ const filterEvents = (data, type, page) =>
     }
     return false;
   })
-
+// end fix filter event bug (1)
 
 const EventList = () => {
   const { data, error } = useData();
   const [type, setType] = useState();
   const [currentPage, setCurrentPage] = useState(1);
 
+// star fix filter event bug (2)
   const [filteredEvents, setFilteredEvents] = useState(filterEvents(data, type, currentPage))
 
   const changeType = (evtType) => {
@@ -45,6 +46,7 @@ const EventList = () => {
   useEffect (()=> {
     setFilteredEvents(filterEvents(data, type, currentPage))
   },[data, type, currentPage])
+// en fix filter event bug (2)
 
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
   const typeList = new Set(data?.events.map((event) => event.type));
@@ -59,7 +61,7 @@ const EventList = () => {
           <h3 className="SelectTitle">Catégories</h3>
           <Select
             selection={Array.from(typeList)}
-            onChange={(e) =>changeType(e)}
+            onChange={(e) =>changeType(e)} // fix filter event (3)
           />
           <div id="events" className="ListContainer">
             {filteredEvents.map((event) => (
