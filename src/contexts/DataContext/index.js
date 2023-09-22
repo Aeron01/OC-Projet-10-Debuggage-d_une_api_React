@@ -33,13 +33,13 @@ export const DataProvider = ({ children }) => {
   });
   
   return (
-    <DataContext.Provider
+      <DataContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
-        data,
-        last:data.events[data.events.length -1],
-        error,
-      }}
+          data,
+          last:data ? data.events[data.events.length -1] : null,
+          error,
+    }}
     >
       {children}
     </DataContext.Provider>
