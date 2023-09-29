@@ -18,7 +18,7 @@ Le design a été validé, et un premier développeur freelance avait commencé 
 
 Le précédent développeur freelance à intégrer à l'application des tests unitaire par Jest pour l'aider dans sa tâche. L’application est donc testée en grande partie :
 
-- les composants sont testés (test unitaire)
+- les composants sont testés (test unitaire) ;
 - le code est entièrement testé.
 
 Mais des bugs reste présent et voici ceux qui ont déjà été répertorier :
