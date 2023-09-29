@@ -4,6 +4,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -19,27 +20,34 @@ export const api = {
 export const DataProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+  const [last, setLast] = useState(null);
   const getData = useCallback(async () => {
     try {
-      setData(await api.loadData());
-
+      // start fix .length test issues
+      const currentData = await api.loadData();
+      setData(currentData);
+			setLast(currentData.events[currentData.events.length -1]); // fix footer thumbnail display
+			// end fix .length test issues
     } catch (err) {
       setError(err);
     }
-  }, []);
+  });
+
+	// start fix .length test & footer thumbnail display issues
+	const out = useMemo(() => ({
+		data, last, error
+	}),[data, last, error])
+	// end fix .length test & footer thumbnail display issues
+
   useEffect(() => {
     if (data) return;
     getData();
   });
   
   return (
-      <DataContext.Provider
-      // eslint-disable-next-line react/jsx-no-constructed-context-values
-      value={{
-          data,
-          last:data ? data.events[data.events.length -1] : null, // fix footer thumbnail display
-          error,
-    }}
+		<DataContext.Provider
+
+      value={out} // fix .length test & footer thumbnail display issues
     >
       {children}
     </DataContext.Provider>
