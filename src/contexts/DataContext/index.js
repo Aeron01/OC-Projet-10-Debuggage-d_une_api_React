@@ -25,8 +25,8 @@ export const DataProvider = ({ children }) => {
     try {
       // start fix .length test issues
       const currentData = await api.loadData();
-      setData(currentData);
-			setLast(currentData.events[currentData.events.length -1]); // fix footer thumbnail display
+      	setData(currentData);
+				setLast(currentData.events[currentData.events.length -1]); // fix footer thumbnail display
 			// end fix .length test issues
     } catch (err) {
       setError(err);
